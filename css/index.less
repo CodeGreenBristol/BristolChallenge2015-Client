@@ -1,0 +1,52 @@
+html, body {
+    height: 100%;
+    width:100%;
+    margin: 0px;
+    padding: 0px
+
+}
+
+.clearfix {
+    clear:both;
+}
+
+/* MAP */
+
+/* CONTROLS */
+
+/* DRAWING */
+
+#draw-types {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    .ind-draw {
+        float:left;
+        width:33.3%;
+        height:140px;       
+        position:relative;
+        &:first-child {
+            width:33.4%;
+        }
+        &.active {
+            height:160px;
+            margin-top:-20px;
+        }
+        &#draw-nature {
+            background:#47d282;
+        }
+        &#draw-flower {
+            background:#dd6ca2;
+        }
+        &#draw-picnic {
+            background:#f4d248;
+        }
+        img {
+            position:absolute;
+            left:50%;
+            margin-left:-32px;
+            top:50%;
+            margin-top:-32px;
+        }
+    }
+}
