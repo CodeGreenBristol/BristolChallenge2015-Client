@@ -63,6 +63,7 @@ html, body {
         }
         #undo-button {
             float:right;
+            display:none;
             background:rgba(0, 0, 0, 0.35);
             margin-top:20px;
             margin-right:20px;
@@ -98,17 +99,18 @@ html, body {
     position:absolute;
     bottom:0;
     width:100%;
+    display:none;
     .ind-draw {
         float:left;
-        width:33.3%;
+        width:25%;
         height:140px;       
         position:relative;
-        &:first-child {
-            width:33.4%;
-        }
         &.draw-active {
             height:160px;
             margin-top:-20px;
+        }
+        &#pan-map {
+            background:#4ca4df;
         }
         &#draw-trees {
             background:#47d282;

@@ -59,6 +59,7 @@ body {
 }
 #top-menu #draw-menu #undo-button {
   float: right;
+  display: none;
   background: rgba(0, 0, 0, 0.35);
   margin-top: 20px;
   margin-right: 20px;
@@ -90,19 +91,20 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
+  display: none;
 }
 #draw-types .ind-draw {
   float: left;
-  width: 33.3%;
+  width: 25%;
   height: 140px;
   position: relative;
-}
-#draw-types .ind-draw:first-child {
-  width: 33.4%;
 }
 #draw-types .ind-draw.draw-active {
   height: 160px;
   margin-top: -20px;
+}
+#draw-types .ind-draw#pan-map {
+  background: #4ca4df;
 }
 #draw-types .ind-draw#draw-trees {
   background: #47d282;
