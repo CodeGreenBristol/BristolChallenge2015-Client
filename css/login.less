@@ -1,0 +1,70 @@
+html, body {
+    height: 100%;
+    width:100%;
+    margin: 0px;
+    padding: 0px
+
+}
+
+body {
+	background-color: #fff;
+	background-image: url(../img/bristol-map-background.png);
+	background-attachment: fixed;
+	background-position: center;
+}
+
+.clearfix {
+    clear:both;
+}
+
+/* LOGIN PAGE STYLES */
+
+#login-items {
+	position: absolute;
+	width: 300px;
+	top: 50%;
+	left: 50%;
+	margin-left: -150px;
+	margin-top: -118px;
+	text-align: center;
+	#mybristol-logo {
+		width: 260px;
+		margin-left: 0px;
+		margin-bottom: 20px;
+	}
+	input, button {
+		box-sizing: border-box;
+		margin: 0 auto;
+		background-color: #e8e8e8;
+		border-radius: 8px;
+		border: 0px;
+		width: 100%;
+		padding: 8px 12px 8px 12px;
+		margin-bottom: 8px;
+		font-family: Open Sans;
+		font-weight: 300;
+		font-size: 20px;
+		color: #818181;
+	}
+	input:focus {
+		background-color: #dad9d9;
+		color: #6b6b6b;
+	}
+	button {
+		background-color: #2caf00;
+		font-weight: 500;
+		color: #fff;
+		text-align: center;
+	}
+	button:focus {
+		background-color: #259200;
+	}
+}
+
+/* REMOVE FOCUS ON ELEMENTS */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
