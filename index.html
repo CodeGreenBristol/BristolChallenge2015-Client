@@ -14,17 +14,153 @@
         <!--<link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.min.css">-->   
   </head>
   <body>
+    <div id="top-menu">
+        <div id="default-menu">
+            <div id="menu-button" class="circular-button"><img src="img/menu-icon.png" alt="Menu icon" /></div>
+            <div id="draw-button" class="circular-button"><img src="img/draw-icon.png" alt="Draw icon" /></div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="draw-menu">
+            <div id="cancel-button" class="circular-button"><img src="img/cross-icon.png" alt="Cross icon" /></div>
+            <div id="area-left"></div>
+            <div id="submit-button" class="circular-button"><img src="img/check-icon.png" alt="Submit icon" /></div>        
+            <div id="undo-button" class="circular-button"><img src="img/undo-icon.png" alt="Undo icon" /></div>
+        </div>
+    </div>
     <div id="draw-types">
-        <div class="ind-draw" id="draw-nature"><img src="img/draw/nature-icon.png" alt="Nature icon" /></div>
-        <div class="ind-draw active" id="draw-flower"><img src="img/draw/flower-icon.png" alt="Flower icon" /></div>
-        <div class="ind-draw" id="draw-picnic"><img src="img/draw/picnic-icon.png" alt="Picnic icon" /></div>
+        <div class="ind-draw draw-active" id="draw-trees" title="Trees"><img src="img/draw/trees-icon.png" alt="Trees icon" /></div>
+        <div class="ind-draw" id="draw-flowers" title="Flowers"><img src="img/draw/flowers-icon.png" alt="Flowers icon" /></div>
+        <div class="ind-draw" id="draw-park" title="Park"><img src="img/draw/park-icon.png" alt="Park icon" /></div>
         <div class="clearfix"></div>
     </div>
     <div id="map-canvas"></div>
     <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="http://www.bdcc.co.uk/Gmaps/GDouglasPeuker.js"></script>
     <!--<script src="js/perfect-scrollbar.min.js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
+    
+    var map;
+    var colours = ['#47d282', '#dd6ca2', '#f4d248'];
+    var selectedColour = 0;
+    var polygonArray = [];
+    
+    function initialize() {
+        
+        var mapOptions = {
+            center: new google.maps.LatLng(51.45, -2.6),
+            zoom: 14,
+            disableDefaultUI: true,
+            styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }]}]
+        };
+        
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        
+        drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: null,
+            drawingControl: false,
+            polygonOptions: {
+                fillColor: "#7092ff",
+                fillOpacity: 0.35,
+                strokeColor: "#7092ff",
+                strokeWeight:4
+            }
+        });
+        drawingManager.setMap(map);
+    }
+    
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+    function drawFreeHand(){
+
+        var polyline = new google.maps.Polyline({ map: map, clickable: false });
+    
+        // move listener
+        var move = google.maps.event.addListener(map, 'mousemove', function(e){
+            polyline.getPath().push(e.latLng);
+        });
+    
+        //mouseup listener
+        google.maps.event.addListenerOnce(map, 'mouseup', function(e){
+            google.maps.event.removeListener(move);
+            var path = polyline.getPath();
+            polyline.setMap(null);             
+
+            var polygon = new google.maps.Polygon({
+                map: map,
+                fillColor: colours[selectedColour],
+                fillOpacity: 0.7,
+                strokeColor: colours[selectedColour],
+                strokeWeight: 2,
+                clickable: false,
+                zIndex: 1,
+                path: GDouglasPeucker(path.j, 50),
+                editable: false
+            });
+            
+            //google.maps.event.clearListeners($('#map-canvas'), 'mousedown');
+           
+        });
+    }
+    
+    
+    function beginDraw(){
+        map.setOptions({
+            draggable: false, 
+            scrollwheel: false, 
+            disableDoubleClickZoom: true
+        });
+    }
+    
+    function endDraw(){
+        map.setOptions({
+            draggable: true, 
+            scrollwheel: true, 
+            disableDoubleClickZoom: false
+        });
+    }
+    
+    
+    // draw type click handler
+    $('.ind-draw').click(function(){
+        if(!$(this).hasClass('draw-active')) {
+            $('.ind-draw.draw-active').removeClass('draw-active');
+            $(this).addClass('draw-active');
+            
+            if($(this).attr("id") == "draw-flowers") selectedColour = 1;
+            else if($(this).attr("id") == "draw-park") selectedColour = 2;
+            else selectedColour = 0;                            
+        }
+    });
+    
+    // draw button click handler
+    $('#draw-button').click(function(){
+        $('#default-menu').hide();
+        $('#draw-menu').show();
+        
+        beginDraw();
+            
+        google.maps.event.addDomListener(map.getDiv(), 'mousedown', function(){
+            drawFreeHand();
+        });    
+    });
+    
+    // cancel draw button click handler
+    $('#cancel-button').click(function(){
+        $('#draw-menu').hide();
+        $('#default-menu').show();
+        
+        endDraw();
+    });
+    
+    // submit draw button click handler
+     $('#submit-button').click(function(){
+        $('#draw-menu').hide();
+        $('#default-menu').show();
+        
+        endDraw();
+    });
+    
     /*
     var jsonData = [
       [
@@ -38,9 +174,14 @@
         {"lat": 15, "lon": 44}
       ]
     ];
+
+$.ajax({
+  type: "POST",
+  url: "http://178.62.54.23:3000/post",
+  data: jsonData,
+  success: function(){}
+    });*/
     
-    $.post("http://178.62.54.23:3000/ReceiveJSON", JSON.stringify(jsonData));
-    */
     </script>
   </body>
 </html>

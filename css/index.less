@@ -12,11 +12,89 @@ html, body {
 
 /* MAP */
 
+#map-canvas {
+    height:100%;
+    width:100%;
+}
+
 /* CONTROLS */
+
+#top-menu {
+    position:absolute;
+    z-index:100;
+    width:100%;
+    .circular-button {
+        width:100px;
+        height:100px;
+        border-radius:50%;
+        cursor:pointer;
+        img {
+            margin:25px;
+        }
+    }
+    #default-menu {        
+        #menu-button {
+            float:left;
+            background:rgba(0, 0, 0, 0.35);
+            margin:20px;
+            &:hover {
+                background:rgba(0, 0, 0, 0.45);
+            }
+        }
+        #draw-button {
+            float:right;
+            background:rgba(52, 152, 219, 0.7);
+            margin:20px;
+            &:hover {
+                background:rgba(52, 152, 219, 0.8);
+            }
+        }
+    }
+    #draw-menu {
+        display:none;
+        #cancel-button {
+            float:left;
+            background:rgba(231, 76, 60, 0.7);
+            margin-top:20px;
+            margin-left:20px;
+            &:hover {
+                background:rgba(231, 76, 60, 0.8);
+            }
+        }
+        #undo-button {
+            float:right;
+            background:rgba(0, 0, 0, 0.35);
+            margin-top:20px;
+            margin-right:20px;
+            &:hover {
+                background:rgba(0, 0, 0, 0.45);
+            }
+        }
+        #submit-button {
+            float:right;
+            background:rgba(42, 186, 103, 0.7);
+            margin-top:20px;
+            margin-right:20px;
+            &:hover {
+                background:rgba(42, 186, 103, 0.8);
+            }
+        }
+        #area-left {
+            float:left;
+            background:rgba(255, 255, 255, 0.7);
+            margin-top:20px;
+            margin-left:20px;
+            border-radius:50px;
+            height:100px;
+            width:~"calc(100% - 400px)";
+        }
+    }
+}
 
 /* DRAWING */
 
 #draw-types {
+    z-index:100;
     position:absolute;
     bottom:0;
     width:100%;
@@ -28,17 +106,17 @@ html, body {
         &:first-child {
             width:33.4%;
         }
-        &.active {
+        &.draw-active {
             height:160px;
             margin-top:-20px;
         }
-        &#draw-nature {
+        &#draw-trees {
             background:#47d282;
         }
-        &#draw-flower {
+        &#draw-flowers {
             background:#dd6ca2;
         }
-        &#draw-picnic {
+        &#draw-park {
             background:#f4d248;
         }
         img {
