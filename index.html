@@ -14,21 +14,27 @@
         <!--<link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.min.css">-->   
   </head>
   <body>
-	<div id = "side-menu">
-		<div id = "user-information">
-			<img id = "profile-picture" src = "img/menu/profile-picture.png" alt = "Profile picture" />
-			<div id = "user-data">
-				<span id = "user-name">Code Green</span>
-				<span id = "user-email">codegreen@email.com</span>
+    <div id="popup">
+        <div id="popup-header">Uh oh, too big!</div>
+        <div id="popup-text">You don't have enough space left to draw that.<br /><br />
+            You can either draw on a smaller area, or participate in municipal events to obtain more space!</div>
+        <div id="popup-close">DISMISS</div>
+    </div>
+	<div id="side-menu">
+		<div id="user-information">
+			<img id="profile-picture" src="img/menu/profile-picture.png" alt="Profile picture" />
+			<div id="user-data">
+				<span id="user-name">Code Green</span>
+				<span id="user-email">codegreen@email.com</span>
 			</div>
 		</div>
-		<ul id = "menu-options">
-			<li>Notifications<span id = "notifications-bubble">2</span></li>
-			<li>Community Map<span id = "toggle-map">ON</span></li>
+		<ul id="menu-options">
+			<li>Notifications<span id="notifications-bubble">2</span></li>
+			<li>Community Map<span id="toggle-map">ON</span></li>
 			<li>Account Settings</li>
 			<li>About</li>
 		</ul>
-		<img id = "qr-code" src = "img/menu/qr-code.png" alt = "OR code" />
+		<img id="qr-code" src="img/menu/qr-code.png" alt="QR code" />
 	</div>
     <div id="top-menu">
         <div id="default-menu">
@@ -38,7 +44,10 @@
         </div>
         <div id="draw-menu">
             <div id="cancel-button" class="circular-button"><img src="img/cross-icon.png" alt="Cross icon" /></div>
-            <div id="area-left"></div>
+            <div id="area-left">
+                <div id="number-left"></div>
+                <div id="phrase-left">M<span>2</span> LEFT</div>
+            </div>
             <div id="submit-button" class="circular-button"><img src="img/check-icon.png" alt="Submit icon" /></div>        
             <div id="undo-button" class="circular-button"><img src="img/undo-icon.png" alt="Undo icon" /></div>
         </div>
@@ -56,5 +65,6 @@
     <!--<script src="js/perfect-scrollbar.min.js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script src="js/index.js"></script>
+    <script src="js/animations.js"></script>
   </body>
 </html>

@@ -3,12 +3,17 @@ var colours = ['#47d282', '#dd6ca2', '#f4d248'];
 var selectedColour = 0;
 var polygonArray = [];
 var permanentPolygons = [];
+var spaceLeft = 10000;
+
+function formattedNumber(number){ 
+    return number.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
+}
 
 function initialize() {
     
     var mapOptions = {
         center: new google.maps.LatLng(51.45, -2.6),
-        zoom: 14,
+        zoom: 15,
         disableDefaultUI: true,
         styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }]}]
     };
@@ -16,24 +21,40 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
    
 }
+$('#number-left').text(formattedNumber(spaceLeft));
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+$('#map-canvas').click(function(){
+    setTimeout(function(){
+        if($('#popup').is(":visible") && !$('#popup').hasClass('scaling')) hidePopup();
+    }, 50);
+});
+
+$('#popup-close').click(function(){
+    hidePopup();
+});
+    
 function drawFreeHand(){
 
     var polyline = new google.maps.Polyline({ map: map, clickable: false, strokeColor: colours[selectedColour] });
 
     // move listener
-    var move = google.maps.event.addListener(map, 'mousemove', function(e){
-        polyline.getPath().push(e.latLng);
+    var move = google.maps.event.addListener(map, 'mousemove touchmove', function(e){
+        polyline.getPath().push(e.latLng);        
     });
-
+    
     //mouseup listener
-    google.maps.event.addListenerOnce(map, 'mouseup', function(e){
+    var mouseup = google.maps.event.addListenerOnce(map, 'mouseup touchend', function(e){
         google.maps.event.removeListener(move);
         var path = polyline.getPath();
         polyline.setMap(null);             
-
+        
+        var pointsArray = GDouglasPeucker(path.j, 10);
+        
+        // make sure at least 3 points
+        if(pointsArray.length < 3) return;       
+        
         var polygon = new google.maps.Polygon({
             map: map,
             fillColor: colours[selectedColour],
@@ -42,16 +63,33 @@ function drawFreeHand(){
             strokeWeight: 2,
             clickable: false,
             zIndex: 1,
-            path: GDouglasPeucker(path.j, 10),
+            path: pointsArray,
             editable: false
         });
         
-        if(polygonArray.length == 0) $('#undo-button').show();
-        polygonArray.push(polygon);
-     
+        // area calculations
+        var area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+        var newArea = spaceLeft - area;
+        if(newArea < 0){
+            polygon.setMap(null);
+            showPopup();
+        }
+        else {
+            spaceLeft = newArea;
+            $('#number-left').text(formattedNumber(spaceLeft));
+            if(polygonArray.length == 0){
+                showUndoButton();
+            }
+            polygonArray.push({"shape": polygon, "type": selectedColour});
+        }
     });
+    
+    google.maps.event.clearListeners(map.getDiv(), 'mousedown touchstart');
+    
+    google.maps.event.addDomListener(map.getDiv(), 'mousedown touchstart', function(){
+        drawFreeHand();
+    });   
 }
-
 
 function beginDraw(){
             
@@ -61,23 +99,18 @@ function beginDraw(){
         disableDoubleClickZoom: true
     });
     
-    google.maps.event.addDomListener(map.getDiv(), 'mousedown', function(){
+    google.maps.event.addDomListener(map.getDiv(), 'mousedown touchstart', function(){
         drawFreeHand();
     });   
 }
 
 function endDraw(){
-    
     map.setOptions({
         draggable: true, 
         scrollwheel: true, 
         disableDoubleClickZoom: false
-    });
-    
-    google.maps.event.clearListeners(map.getDiv(), 'mousedown');
-    
+    });    
 }
-
 
 // draw type click handler
 $('.ind-draw').click(function(){
@@ -100,21 +133,21 @@ $('.ind-draw').click(function(){
 
 // draw button click handler
 $('#draw-button').click(function(){
-    $('#default-menu').hide();
-    $('#draw-menu').show();
-    $('#draw-types').show();      
+    
+    showDrawMenu();
+    showDrawTypes();
+    
     $('.draw-active').removeClass('draw-active');
     $('#pan-map').addClass('draw-active');
 });
 
 // cancel draw button click handler
 $('#cancel-button').click(function(){
-    $('#draw-menu').hide();
-    $('#draw-types').hide();
-    $('#default-menu').show();
- 
+    
+    hideDrawTypes();
+
     $.each(polygonArray, function(key, val){
-        val.setMap(null);
+        val.shape.setMap(null);
     });
     polygonArray = [];
     
@@ -123,24 +156,23 @@ $('#cancel-button').click(function(){
 
 // submit draw button click handler
  $('#submit-button').click(function(){
-    $('#draw-menu').hide();
-    $('#draw-types').hide();
-    $('#default-menu').show();
+    
+    hideDrawMenu();
+    hideDrawTypes();      
                     
     var polygonData = [];
     $.each(polygonArray, function(key, val){
         var indPolygonData = [];
-        $.each(val.getPath().getArray(), function(key, val){
+        $.each(val.shape.getPath().getArray(), function(key, val){
             indPolygonData.push({"lat": val.lat(), "lon": val.lng()});
         });
-        polygonData.push({"type": selectedColour, "points": indPolygonData});
+        polygonData.push({"type": val.type, "points": indPolygonData, "center": centerCoords(indPolygonData)});
     });
-    
+       
     permanentPolygons = permanentPolygons.concat(polygonData);
     polygonArray = [];
-    
     endDraw();
-
+    
     $.ajax({
         type: "POST",
         url: "http://178.62.54.23:3000/post",
@@ -148,13 +180,26 @@ $('#cancel-button').click(function(){
         contentType: "text/plain",
         success: function(data){ }
     });
-   
 });
 
+// get center lat long of polygon
+function centerCoords(pointsArray){
+    var lat = 0, lon = 0;
+    for(var i = 0; i < pointsArray.length; i++){
+         lat += pointsArray[i].lat;
+         lon += pointsArray[i].lon;
+    }
+    lat /= pointsArray.length;
+    lon /= pointsArray.length;
+    return {"lat": lat, "lon": lon};
+}
+    
 // undo draw button click handler
 $('#undo-button').click(function(){
     
     var polygon = polygonArray.pop();
-    if(typeof polygon !== "undefined") polygon.setMap(null);
-    if(polygonArray.length == 0) $('#undo-button').hide();
+    if(typeof polygon !== "undefined") polygon.shape.setMap(null);
+    if(polygonArray.length == 0) {
+        hideUndoButton();
+    }
 });

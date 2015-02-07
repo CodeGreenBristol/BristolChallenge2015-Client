@@ -4,7 +4,8 @@ body {
   height: 100%;
   width: 100%;
   margin: 0px;
-  padding: 0px;
+  padding: 0px
+    overflow:hidden;
 }
 .clearfix {
   clear: both;
@@ -13,6 +14,47 @@ body {
 #map-canvas {
   height: 100%;
   width: 100%;
+}
+/* POPUP */
+#popup {
+  transition: all .2s linear;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 320px;
+  height: 253px;
+  border-radius: 10px;
+  margin-top: -126px;
+  margin-left: -160px;
+  background: #fff;
+  display: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.17);
+  font-family: "Open Sans", sans-serif;
+  z-index: 1000;
+}
+#popup #popup-header {
+  font-weight: 400;
+  font-size: 16px;
+  padding: 20px 20px 15px;
+}
+#popup #popup-text {
+  font-weight: 300;
+  font-size: 16px;
+  padding: 0px 20px 25px;
+}
+#popup #popup-close {
+  background: #4ca4df;
+  color: #fff;
+  font-weight: 300;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#popup #popup-close:hover {
+  background: #43a0dd;
 }
 /* SIDE MENU */
 #side-menu {
@@ -102,6 +144,7 @@ body {
   height: 100px;
   border-radius: 50%;
   cursor: pointer;
+  transition: all .1s linear;
 }
 #top-menu .circular-button img {
   margin: 25px;
@@ -160,25 +203,49 @@ body {
   margin-left: 20px;
   border-radius: 50px;
   height: 100px;
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  transition: all .1s linear;
+  width: calc(100% - 280px);
+}
+#top-menu #draw-menu #area-left.area-small {
   width: calc(100% - 400px);
+}
+#top-menu #draw-menu #area-left #number-left {
+  font-weight: 500;
+  font-size: 35px;
+  margin-top: 13px;
+}
+#top-menu #draw-menu #area-left #phrase-left {
+  margin-top: -5px;
+  font-weight: 400;
+  font-size: 20px;
+}
+#top-menu #draw-menu #area-left #phrase-left span {
+  font-size: 14px;
+  vertical-align: top;
 }
 /* DRAWING */
 #draw-types {
+  height: 160px;
   z-index: 100;
   position: absolute;
   bottom: 0;
   width: 100%;
   display: none;
+  overflow: hidden;
 }
 #draw-types .ind-draw {
   float: left;
   width: 25%;
   height: 140px;
+  margin-top: 20px;
+  bottom: -160px;
   position: relative;
 }
 #draw-types .ind-draw.draw-active {
   height: 160px;
-  margin-top: -20px;
+  margin-top: 0px;
 }
 #draw-types .ind-draw#pan-map {
   background: #4ca4df;
