@@ -17,12 +17,89 @@ html, body {
     width:100%;
 }
 
+/* SIDE MENU */
+
+#side-menu {
+    display:none;
+	position: absolute;
+	background-color: #fff;
+	height: 100%;
+	width: 260px;
+	z-index: 200;
+	box-shadow: 0 0 60px 20px rgba(0,0,0,0.5);
+	#user-information {
+		margin: 18px;
+		#profile-picture {
+			width: 71px;
+		}
+		#user-data {
+			position: absolute;
+			width: 106px;
+			left: 100px;
+			top: 33px;
+			font-family: Open Sans;
+			color: #4d4c4c;
+			#user-name {
+				font-weight: 500;
+				font-size: 18px;
+			}
+			#user-email {
+				font-weight: 300;
+				font-size: 12px;
+				/*font-style: italic;*/
+			}
+		}
+	}
+	#menu-options {
+		width: 240px;
+		margin-left: 0px;
+		list-style-type: none;
+		padding: 0px;
+		margin-left: 20px;
+		li {
+			display: block;
+			padding: 15px 0px 15px 0px;
+			border-top: 1px solid #cac8c8;
+			font-family: Open Sans;
+			color: #4d4c4c;
+			font-weight: 300;
+			font-size: 15px;
+			#notifications-bubble, #toggle-map {	
+				display: inline-block;
+				vertical-align: top;
+				height: 15px;
+				background-color: #fc4700;
+				border-radius: 7.5px;
+				font-family: Open Sans;
+				color: #fff;
+				font-size: 10px;
+				font-weight: 500;
+				padding: 0 5px 0 5px;
+				margin-left: 5px;
+				margin-top: 4px;
+			}
+			#toggle-map {
+				background-color: #26df35;
+				padding: 0 5px 0 4px;
+			}
+		}
+	}
+	#qr-code {
+		position: absolute;
+		left: 50%;
+		margin-left: -62px;
+		bottom: 68px;
+		width: 125px;		
+	}
+}
+
 /* CONTROLS */
 
 #top-menu {
     position:absolute;
     z-index:100;
     width:100%;
+	z-index: 150;
     .circular-button {
         width:100px;
         height:100px;
