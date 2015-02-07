@@ -14,6 +14,22 @@
         <!--<link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.min.css">-->   
   </head>
   <body>
+	<div id = "login-container">
+		<div id = "login-items">
+			<img id = "mybristol-logo" src = "img/logo.png" alt = "Logo" />
+			<div id="loading-animation">
+				<div id="circleG_1" class="circleG">
+				</div>
+				<div id="circleG_2" class="circleG">
+				</div>
+				<div id="circleG_3" class="circleG">
+				</div>
+			</div>
+			<input type = "email" placeholder = "Email" id = "email-field"></input>
+			<input type = "password" placeholder = "Password" id = "password-field"></input>
+			<button type = "submit" value = "Login" id = "login-button">Login</button> 
+		</div> 
+	</div>
 	<div id = "side-menu">
 		<div id = "user-information">
 			<img id = "profile-picture" src = "img/menu/profile-picture.png" alt = "Profile picture" />
@@ -24,15 +40,24 @@
 		</div>
 		<ul id = "menu-options">
 			<li>Notifications<span id = "notifications-bubble">2</span></li>
-			<li>Community Map<span id = "toggle-map">ON</span></li>
+			<li>Community Map
+				<div id = "toggle-map-container">
+					<div id = "toggle-map-button"></div>
+					<div id = "toggle-map-cursor"></div>
+				</div>
+			</li>
 			<li>Account Settings</li>
 			<li>About</li>
 		</ul>
 		<img id = "qr-code" src = "img/menu/qr-code.png" alt = "OR code" />
 	</div>
+	<div id = "mask-layer"></div>
     <div id="top-menu">
         <div id="default-menu">
-            <div id="menu-button" class="circular-button"><img src="img/menu-icon.png" alt="Menu icon" /></div>
+			<div id = "outer-menu-button">
+				<div id="menu-button-duplicate" class="circular-button"><img src="img/menu-icon.png" alt="Menu icon" /></div>
+				<div id="menu-button" class="circular-button"><img src="img/menu-icon.png" alt="Menu icon" /></div>
+			</div>
             <div id="draw-button" class="circular-button"><img src="img/draw-icon.png" alt="Draw icon" /></div>
             <div class="clearfix"></div>
         </div>

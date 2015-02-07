@@ -1,3 +1,13 @@
+// hide login page
+$('#login-button').click(function() {
+	$('#email-field').fadeOut(200);
+	$('#password-field').fadeOut(200);
+	$('#login-button').fadeOut(200);
+	$('#loading-animation').fadeIn(200);
+	$('#login-container').delay(2000).animate({'margin-left': '-320px'},300);
+	/*$('#login-container').fadeOut(300);*/
+});
+
 var map;
 var colours = ['#47d282', '#dd6ca2', '#f4d248'];
 var selectedColour = 0;
@@ -157,4 +167,38 @@ $('#undo-button').click(function(){
     var polygon = polygonArray.pop();
     if(typeof polygon !== "undefined") polygon.setMap(null);
     if(polygonArray.length == 0) $('#undo-button').hide();
+});
+
+// expand menu
+$('#outer-menu-button').click(function() {
+	if(!$('#menu-button-duplicate').is(':visible')) {
+		$('#draw-button').fadeOut(200);
+		$('#mask-layer').fadeIn(400);
+		$('#menu-button').fadeOut(300);
+		$('#menu-button-duplicate').fadeIn(300);
+		$('#outer-menu-button').animate({'margin-left': '265px'}, 400);
+		$('#side-menu').animate({'left': '0px'}, {duration: 400});
+	}
+	else {
+		$('#draw-button').fadeIn(200);
+		$('#mask-layer').fadeOut(400);
+		$('#menu-button').fadeIn(300);
+		$('#menu-button-duplicate').fadeOut(300);
+		$('#outer-menu-button').animate({'margin-left': '15px'}, 400);
+		$('#side-menu').animate({'left': '-260px'}, {duration: 400});
+	}
+});
+
+// toggle Community Map
+$('#toggle-map-container').click(function() {
+	if(!$('#toggle-map-container').hasClass('toggled')) {
+		$('#toggle-map-button').css({'background-color': '#fc4700'});
+		$('#toggle-map-cursor').animate({'margin-left': '18px'}, 200);
+		$('#toggle-map-container').addClass('toggled');
+	}
+	else {
+		$('#toggle-map-button').css({'background-color': '#26df35'});
+		$('#toggle-map-cursor').animate({'margin-left': '0px'}, 200);
+		$('#toggle-map-container').removeClass('toggled');
+	}
 });
