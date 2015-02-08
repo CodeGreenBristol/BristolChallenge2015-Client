@@ -29,6 +29,7 @@ function initialize() {
 		var zoomLevel = map.getZoom() - 12;
 		zoomLevel = Math.max(zoomLevel, 1);
 		zoomLevel = Math.pow(zoomLevel, 2.5);
+		zoomLevel /= 2;
 		
 		console.log('zoom level = ', zoomLevel);
 		heatmap_trees.set('radius', zoomLevel);
@@ -240,24 +241,18 @@ $.ajax({
         var lat = parseFloat(obj["lat"]) / 10000;
         var lon = parseFloat(obj["lon"]) / 10000;
 
-        if(max == weight_flowers){
-            while(weight_flowers!=0.0) {
-                flowerPoints.push(new google.maps.LatLng(lat, lon));
-                weight_flowers = weight_flowers - 1.0;
-            }
+        if(max == weight_flowers)
+				{
+                flowerPoints.push({location: new google.maps.LatLng(lat, lon), weight: max});
         }
-        else if(max == weight_park) {
-            while(weight_park != 0.0) {
-                parkPoints.push(new google.maps.LatLng(lat, lon));
-                weight_park = weight_park - 1.0;
-            }
-        }
-        else {
-            while(weight_trees != 0.0) {
-                treePoints.push(new google.maps.LatLng(lat, lon));
-                weight_trees = weight_trees - 1.0;
-            }
-        }      
+        else if(max == weight_park) 
+				{
+                parkPoints.push({location: new google.maps.LatLng(lat, lon), weight: max});
+				}
+        else 
+				{
+                treePoints.push({location: new google.maps.LatLng(lat, lon), weight: max});
+				}        
     }
     initializeHeatmap();
   }
@@ -273,19 +268,25 @@ function initializeHeatmap() {
 	'rgba(71, 210, 130, 0)',
 	'rgba(71, 210, 130, 0.1)',
 	'rgba(71, 210, 130, 0.2)',
-	'rgba(71, 210, 130, 0.3)',
-	'rgba(71, 210, 130, 0.6)',
-    'rgba(71, 210, 130, 1)'
+	'rgba(71, 210, 130, 0.4)',
+	'rgba(71, 210, 130, 0.7)',
+  'rgba(71, 210, 130, 1)'
   ];
   var gradient_flowers = [
-    'rgba(0, 255, 0, 0)',
-    'rgba(221, 108, 162, 1)',
-    'rgba(154, 65, 108, 1)'
+    'rgba(221, 108, 162, 0)',
+    'rgba(221, 108, 162, 0.1)',
+		'rgba(221, 108, 162, 0.2)',
+    'rgba(221, 108, 162, 0.4)',
+    'rgba(221, 108, 162, 0.7)',
+    'rgba(221, 108, 162, 1)'
   ];
   var gradient_park = [
-    'rgba(255, 0, 0, 0)',
+    'rgba(244, 201, 72, 0)',
+    'rgba(244, 201, 72, 0.1)',
+    'rgba(244, 201, 72, 0.2)',
+    'rgba(244, 201, 72, 0.4)',
+    'rgba(244, 201, 72, 0.7)',
     'rgba(244, 201, 72, 1)',
-    'rgba(197, 170, 58, 1)'
   ];
   heatmap_trees = new google.maps.visualization.HeatmapLayer({
     data: pointArray
@@ -299,9 +300,9 @@ function initializeHeatmap() {
   heatmap_trees.set('gradient', heatmap_trees.get('gradient') ? null : gradient_trees);
   heatmap_flowers.set('gradient', heatmap_flowers.get('gradient') ? null : gradient_flowers);
   heatmap_park.set('gradient', heatmap_park.get('gradient') ? null : gradient_park);
-  heatmap_trees.set('radius', 15);
-  heatmap_flowers.set('radius', 15);
-  heatmap_park.set('radius', 15);
+  heatmap_trees.set('radius', 7);
+  heatmap_flowers.set('radius', 7);
+  heatmap_park.set('radius', 7);
   heatmap_park.setMap(map);
   heatmap_trees.setMap(map);
   heatmap_flowers.setMap(map);
