@@ -191,22 +191,23 @@ html, body {
 				margin-left: 7px;
 				margin-top: 2px;
 			}
-			#toggle-map-container {
-				display: inline-block;
+            .toggle-container {
+                display: inline-block;
+                float:right;
 				vertical-align: top;
 				height: 26px;
 				width: 46px;
-				margin-left: 7px;
-				margin-top: 0px;
-				#toggle-map-button {
-					height: 26px;
+                margin-top: 0px;
+                margin-right:20px;
+                .toggle-background {
+                    height: 26px;
 					background-color: #26df35;
 					border-radius: 13px;
 					z-index: 210;
 					padding: 0 18px 0 18px;
-				}
-				#toggle-map-cursor {
-					width: 26px;
+                }
+                .toggle-button {
+                    width: 26px;
 					height: 26px;
 					background-color: #fff;
 					border-radius: 13px;
@@ -214,8 +215,8 @@ html, body {
 					z-index: 220;
 					margin-top: -27px;
 					margin-left: 0px;
-				}
-			}
+                }
+            }
 		}
 	}
 	#qr-code {
@@ -346,6 +347,7 @@ html, body {
     overflow:hidden;
     .ind-draw {
         float:left;
+        transition:all .1s linear;
         width:25%;
         height:140px;  
         margin-top:20px;
