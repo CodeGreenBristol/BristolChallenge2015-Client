@@ -64,7 +64,7 @@ function drawFreeHand(){
         var path = polyline.getPath();
         polyline.setMap(null);             
         
-        var pointsArray = GDouglasPeucker(path.j, 10);
+        var pointsArray = GDouglasPeucker(path.j, 3);
         
         // make sure at least 3 points
         if(pointsArray.length < 3) return;       
