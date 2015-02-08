@@ -19,6 +19,10 @@ function formattedNumber(number){
     return number.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
 }
 
+function refreshSpaceLeft(){
+    $('#number-left').text(formattedNumber(spaceLeft));
+}
+    
 function initialize() {
     
     var mapOptions = {
@@ -31,7 +35,7 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
    
 }
-$('#number-left').text(formattedNumber(spaceLeft));
+refreshSpaceLeft();
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -86,11 +90,11 @@ function drawFreeHand(){
         }
         else {
             spaceLeft = newArea;
-            $('#number-left').text(formattedNumber(spaceLeft));
+            refreshSpaceLeft();
             if(polygonArray.length == 0){
-                showUndoButton();
+                showEditButtons();
             }
-            polygonArray.push({"shape": polygon, "type": selectedColour});
+            polygonArray.push({"shape": polygon, "type": selectedColour, "area": area});
         }
     });
     
@@ -159,7 +163,7 @@ $('#cancel-button').click(function(){
     hideDrawMenu();
     hideDrawTypes();
     hidePopup();
-    hideUndoButton();
+    hideEditButtons();
     
     $.each(polygonArray, function(key, val){
         val.shape.setMap(null);
@@ -215,9 +219,13 @@ $('#undo-button').click(function(){
     
     var polygon = polygonArray.pop();
 
-    if(typeof polygon !== "undefined") polygon.shape.setMap(null);
+    if(typeof polygon !== "undefined"){
+        polygon.shape.setMap(null);
+        spaceLeft += polygon.area;
+        refreshSpaceLeft();
+    }
     if(polygonArray.length == 0) {
-        hideUndoButton();
+        hideEditButtons();
     }
 });
 

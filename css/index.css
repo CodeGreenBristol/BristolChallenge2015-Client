@@ -287,6 +287,7 @@ body {
 }
 #top-menu #draw-menu #submit-button {
   float: right;
+  display: none;
   background: rgba(42, 186, 103, 0.7);
   margin-top: 20px;
   margin-right: 20px;
@@ -304,7 +305,7 @@ body {
   font-family: "Open Sans", sans-serif;
   text-align: center;
   transition: all .1s linear;
-  width: calc(100% - 280px);
+  width: calc(100% - 160px);
 }
 #top-menu #draw-menu #area-left.area-small {
   width: calc(100% - 400px);
@@ -392,7 +393,7 @@ body {
   }
   #top-menu #draw-menu #area-left {
     height: 50px;
-    width: calc(100% - 160px);
+    width: calc(100% - 95px);
   }
   #top-menu #draw-menu #area-left.area-small {
     width: calc(100% - 225px);
