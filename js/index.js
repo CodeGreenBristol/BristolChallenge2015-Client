@@ -19,6 +19,7 @@ function initialize() {
     var mapOptions = {
         center: new google.maps.LatLng(51.45, -2.6),
         zoom: 15,
+        minZoom: 13,
         disableDefaultUI: true,
         styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }]}]
     };
@@ -31,7 +32,7 @@ function initialize() {
 		zoomLevel = Math.pow(zoomLevel, 2.5);
 		zoomLevel /= 2;
 		
-		console.log('zoom level = ', zoomLevel);
+		//console.log('zoom level = ', zoomLevel);
 		heatmap_trees.set('radius', zoomLevel);
 		heatmap_flowers.set('radius', zoomLevel);
 		heatmap_park.set('radius', zoomLevel);
@@ -307,3 +308,35 @@ function initializeHeatmap() {
   heatmap_trees.setMap(map);
   heatmap_flowers.setMap(map);
 }
+
+// toggle community map
+$('#toggle-map').click(function() {
+    
+	if($(this).hasClass('toggled')){
+        $(this).removeClass('toggled');
+        heatmap_trees.setMap(null);
+        heatmap_park.setMap(null);
+        heatmap_flowers.setMap(null);
+    }
+    else {
+        $(this).addClass('toggled');
+        setTimeout(function(){
+            heatmap_trees.setMap(map);
+            heatmap_park.setMap(map);
+            heatmap_flowers.setMap(map);
+        }, 200);
+    }
+});
+
+// toggle satellite view
+$('#toggle-satellite').click(function() {
+    
+	if($(this).hasClass('toggled')){
+        $(this).removeClass('toggled');
+        map.setMapTypeId(google.maps.MapTypeId.ROADMAP);       
+    }
+    else {
+        $(this).addClass('toggled');
+        map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+    }
+});
