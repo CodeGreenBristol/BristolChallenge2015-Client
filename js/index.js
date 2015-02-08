@@ -14,6 +14,7 @@ var selectedColour = 0;
 var polygonArray = [];
 var permanentPolygons = [];
 var spaceLeft = 10000;
+var drawListener;
 
 function formattedNumber(number){ 
     return number.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
@@ -55,7 +56,7 @@ function drawFreeHand(){
     });
     
     //mouseup listener
-    var mouseup = google.maps.event.addListenerOnce(map, 'mouseup', function(e){
+    google.maps.event.addListenerOnce(map, 'mouseup', function(e){
         google.maps.event.removeListener(move);
         var path = polyline.getPath();
         polyline.setMap(null);             
@@ -101,24 +102,26 @@ function drawFreeHand(){
 }
 
 function beginDraw(){
-            
+    
+    drawListener = google.maps.event.addDomListener(map.getDiv(), 'mousedown', drawFreeHand); 
+    
     map.setOptions({
         draggable: false, 
         scrollwheel: false, 
         disableDoubleClickZoom: true
     });
-    
-    google.maps.event.addDomListener(map.getDiv(), 'mousedown', drawFreeHand);   
 }
 
 function endDraw(){
+    
+    google.maps.event.removeListener(drawListener);
+    // google.maps.event.clearListeners(map.getDiv(), 'mousedown');
+    
     map.setOptions({
         draggable: true, 
         scrollwheel: true, 
         disableDoubleClickZoom: false
-    });    
-    
-    google.maps.event.clearListeners(map.getDiv(), 'mousedown');
+    });         
 }
 
 // draw type click handler
@@ -127,10 +130,8 @@ $('.ind-draw').click(function(){
         $('.ind-draw.draw-active').removeClass('draw-active');
         $(this).addClass('draw-active');
         
-        if($(this).attr("id") == "pan-map"){           
-            endDraw();
-        }
-        else {
+        endDraw();
+        if($(this).attr("id") != "pan-map"){
             if($(this).attr("id") == "draw-flowers") selectedColour = 1;
             else if($(this).attr("id") == "draw-park") selectedColour = 2;
             else selectedColour = 0;            
