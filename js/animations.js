@@ -66,18 +66,21 @@ function hideDrawTypes(){
     });   
     $('.ind-draw').promise().done(function() { $('#draw-types').hide(); });
 }
-
-function showUndoButton(){   
+    
+function showEditButtons(){   
     $('#area-left').addClass('area-small');
     setTimeout(function(){
         $('#undo-button').css('transform', 'scale(0.01)').show().css('transform', 'scale(1)');
-    }, 100);
+        $('#submit-button').css('transform', 'scale(0.01)').show().css('transform', 'scale(1)');
+    }, 150);
 }
     
-function hideUndoButton(){
+function hideEditButtons(){
     $('#undo-button').css('transform', 'scale(0.01)');
+    $('#submit-button').css('transform', 'scale(0.01)');
     setTimeout(function(){
         $('#undo-button').hide();
+        $('#submit-button').hide();
         $('#area-left').removeClass('area-small');
     }, 100); 
 }

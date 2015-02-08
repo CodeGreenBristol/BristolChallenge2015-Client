@@ -9,6 +9,10 @@ function formattedNumber(number){
     return number.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 "); 
 }
 
+function refreshSpaceLeft(){
+    $('#number-left').text(formattedNumber(spaceLeft));
+}
+    
 function initialize() {
     
     var mapOptions = {
@@ -32,22 +36,18 @@ function initialize() {
 		
 	});
 }
-$('#number-left').text(formattedNumber(spaceLeft));
+refreshSpaceLeft();
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-$('#map-canvas').click(function(){
-    setTimeout(function(){
-        if($('#popup').is(":visible") && !$('#popup').hasClass('scaling')) hidePopup();
-    }, 50);
-});
 
 $('#popup-close').click(function(){
     hidePopup();
 });
     
 function drawFreeHand(){
-
+    
+    if($('#popup').is(":visible") && !$('#popup').hasClass('scaling')) hidePopup();
+    
     var polyline = new google.maps.Polyline({ map: map, clickable: false, strokeColor: colours[selectedColour] });
 
     // move listener
@@ -61,7 +61,7 @@ function drawFreeHand(){
         var path = polyline.getPath();
         polyline.setMap(null);             
         
-        var pointsArray = GDouglasPeucker(path.j, 10);
+        var pointsArray = GDouglasPeucker(path.j, 3);
         
         // make sure at least 3 points
         if(pointsArray.length < 3) return;       
@@ -87,19 +87,18 @@ function drawFreeHand(){
         }
         else {
             spaceLeft = newArea;
-            $('#number-left').text(formattedNumber(spaceLeft));
+            refreshSpaceLeft();
             if(polygonArray.length == 0){
-                showUndoButton();
+                showEditButtons();
             }
-            polygonArray.push({"shape": polygon, "type": selectedColour});
+            polygonArray.push({"shape": polygon, "type": selectedColour, "area": area});
         }
     });
     
-    google.maps.event.clearListeners(map.getDiv(), 'mousedown');
+    //google.maps.event.clearListeners(map.getDiv(), 'mousedown');
     
-    google.maps.event.addDomListener(map.getDiv(), 'mousedown', function(){
-        drawFreeHand();
-    });   
+    //google.maps.event.addDomListener(map.getDiv(), 'mousedown', drawFreeHand);  
+    
 }
 
 function beginDraw(){
@@ -110,9 +109,7 @@ function beginDraw(){
         disableDoubleClickZoom: true
     });
     
-    google.maps.event.addDomListener(map.getDiv(), 'mousedown', function(){
-        drawFreeHand();
-    });   
+    google.maps.event.addDomListener(map.getDiv(), 'mousedown', drawFreeHand);   
 }
 
 function endDraw(){
@@ -121,6 +118,8 @@ function endDraw(){
         scrollwheel: true, 
         disableDoubleClickZoom: false
     });    
+    
+    google.maps.event.clearListeners(map.getDiv(), 'mousedown');
 }
 
 // draw type click handler
@@ -158,6 +157,7 @@ $('#cancel-button').click(function(){
     hideDrawMenu();
     hideDrawTypes();
     hidePopup();
+    hideEditButtons();
     
     $.each(polygonArray, function(key, val){
         val.shape.setMap(null);
@@ -213,9 +213,13 @@ $('#undo-button').click(function(){
     
     var polygon = polygonArray.pop();
 
-    if(typeof polygon !== "undefined") polygon.shape.setMap(null);
+    if(typeof polygon !== "undefined"){
+        polygon.shape.setMap(null);
+        spaceLeft += polygon.area;
+        refreshSpaceLeft();
+    }
     if(polygonArray.length == 0) {
-        hideUndoButton();
+        hideEditButtons();
     }
 });
 

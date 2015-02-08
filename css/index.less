@@ -86,11 +86,11 @@ html, body {
     position:fixed;
     left:50%;
     top:50%;
-    width:320px;
+    width:290px;
     height:253px;
     border-radius:10px;
     margin-top:-126px;
-    margin-left:-160px;
+    margin-left:-145px;
     background:#fff;
     display:none;
     box-shadow:0px 0px 5px rgba(0,0,0,0.17);
@@ -294,6 +294,7 @@ html, body {
         }
         #submit-button {
             float:right;
+            display:none;
             background:rgba(42, 186, 103, 0.7);
             margin-top:20px;
             margin-right:20px;
@@ -311,7 +312,7 @@ html, body {
             font-family:"Open Sans", sans-serif;
             text-align:center;
             transition:all .1s linear;
-            width:~"calc(100% - 280px)";
+            width:~"calc(100% - 160px)"; 
             &.area-small {
                 width:~"calc(100% - 400px)";
             }
@@ -376,61 +377,14 @@ html, body {
     }
 }
 
-
 /* RESPONSIVENESS FOR MOBILE */
-@media only screen and (min-width : 320px) and (max-width : 768px) {
-	/* SIDE MENU */
 
-	#side-menu {
-		position: absolute;
-		background-color: #fff;
-		height: 100%;
-		width: 260px;
-		left: -260px;
-		z-index: 200;
-		/*box-shadow: 0 0 60px 20px rgba(0,0,0,0.5);*/
-		#user-information {
-			margin: 18px;
-			#profile-picture {
-				width: 71px;
-			}
-			#user-data {
-				position: absolute;
-				width: 106px;
-				left: 100px;
-				top: 33px;
-				font-family: Open Sans;
-				color: #4d4c4c;
-				#user-name {
-					font-weight: 500;
-					font-size: 18px;
-				}
-				#user-email {
-					font-weight: 300;
-					font-size: 12px;
-					/*font-style: italic;*/
-				}
-			}
-		}
-		#menu-options {
-			width: 240px;
-			margin-left: 0px;
-			list-style-type: none;
-			padding: 0px;
-			margin-left: 20px;
-		}
-		#qr-code {
-			position: absolute;
-			left: 50%;
-			margin-left: -62px;
-			bottom: 68px;
-			width: 125px;		
-		}
-	}
+@media only screen and (min-width : 320px) and (max-width : 768px) {
 
 	/* CONTROLS */
 
 	#top-menu {
+        top:10px;
 		.circular-button {
 			width:50px;
 			height:50px;
@@ -445,7 +399,6 @@ html, body {
 			}
 		}
 		#draw-menu {
-			display:none;
 			#cancel-button, #undo-button, #submit-button, #area-left {
 				margin-top:15px;
 				margin-left: 15px;
@@ -456,7 +409,20 @@ html, body {
 			}
 			#area-left {
 				height:50px;
-				width:~"calc(100% - 225px)";
+				width:~"calc(100% - 95px)";
+                &.area-small {
+                    width:~"calc(100% - 225px)";
+                }
+                #number-left {
+                    margin-top:1px;
+                    font-size:23px;
+                }
+                #phrase-left {
+                    font-size:13px;
+                    span {
+                        font-size:10px;
+                    }
+                }
 			}
 		}
 	}
@@ -464,24 +430,18 @@ html, body {
 	/* DRAWING */
 
 	#draw-types {
-		bottom:0;
-		width:100%;
-		display:none;
+        height:80px;
 		.ind-draw {
-			float:left;
-			width:25%;
-			height:70px;       
-			position:relative;
+			height:70px;   
+            margin-top:10px;
+            bottom:-80px;
 			&.draw-active {
 				height:80px;
-				margin-top:-10px;
+				margin-top:0px;
 			}
 			img {
 				width: 32px;
-				position:absolute;
-				left:50%;
 				margin-left:-16px;
-				top:50%;
 				margin-top:-16px;
 			}
 		}
@@ -489,6 +449,7 @@ html, body {
 }
 
 /* loading animation styles */
+
 #loading-animation {
 	margin-left: 137px;
 	display: none;

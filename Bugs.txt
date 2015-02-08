@@ -1,14 +1,14 @@
 Bugs
 ---------------
 
-- Disappearance of menu button with bg
-- Click outside of menu to hide
 - Responsiveness of draw type buttons, area left
 - Drawing on mobile
 - Heatmaps slow, need optimisation (generally)
 - Dynamic heatmap marker scaling
 - Auto-refresh of heatmap on new feature submit (maybe)
 
+- Undo button flies onto screen
+- Popup appearing on cancel
 
 - Mockups of municipality area
 - Presentation slides
