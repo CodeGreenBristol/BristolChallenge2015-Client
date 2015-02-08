@@ -122,10 +122,17 @@ $('#toggle-map-container').click(function() {
 		$('#toggle-map-button').css({'background-color': '#fc4700'});
 		$('#toggle-map-cursor').animate({'margin-left': '18px'}, 200);
 		$('#toggle-map-container').addClass('toggled');
+		// hide heatmap
+		heatmap_trees.setMap(null);
+		heatmap_park.setMap(null);
+		heatmap_flowers.setMap(null);
 	}
 	else {
 		$('#toggle-map-button').css({'background-color': '#26df35'});
 		$('#toggle-map-cursor').animate({'margin-left': '0px'}, 200);
 		$('#toggle-map-container').removeClass('toggled');
+		heatmap_trees.setMap(map);
+		heatmap_park.setMap(map);
+		heatmap_flowers.setMap(map);
 	}
 });
