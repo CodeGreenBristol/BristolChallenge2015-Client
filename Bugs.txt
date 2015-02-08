@@ -1,0 +1,18 @@
+Bugs
+---------------
+
+- Disappearance of menu button with bg
+- Click outside of menu to hide
+- Responsiveness of draw type buttons, area left
+- Drawing on mobile
+- Heatmaps slow, need optimisation (generally)
+- Dynamic heatmap marker scaling
+- Auto-refresh of heatmap on new feature submit (maybe)
+
+
+- Mockups of municipality area
+- Presentation slides
+- Presentation rehearsal
+
+- Make £££
+- Fuck B*tches
