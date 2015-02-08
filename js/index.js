@@ -39,18 +39,14 @@ refreshSpaceLeft();
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-$('#map-canvas').click(function(){
-    setTimeout(function(){
-        if($('#popup').is(":visible") && !$('#popup').hasClass('scaling')) hidePopup();
-    }, 50);
-});
-
 $('#popup-close').click(function(){
     hidePopup();
 });
     
 function drawFreeHand(){
-
+    
+    if($('#popup').is(":visible") && !$('#popup').hasClass('scaling')) hidePopup();
+    
     var polyline = new google.maps.Polyline({ map: map, clickable: false, strokeColor: colours[selectedColour] });
 
     // move listener
@@ -98,11 +94,10 @@ function drawFreeHand(){
         }
     });
     
-    google.maps.event.clearListeners(map.getDiv(), 'mousedown');
+    //google.maps.event.clearListeners(map.getDiv(), 'mousedown');
     
-    google.maps.event.addDomListener(map.getDiv(), 'mousedown', function(){
-        drawFreeHand();
-    });   
+    //google.maps.event.addDomListener(map.getDiv(), 'mousedown', drawFreeHand);  
+    
 }
 
 function beginDraw(){
@@ -113,9 +108,7 @@ function beginDraw(){
         disableDoubleClickZoom: true
     });
     
-    google.maps.event.addDomListener(map.getDiv(), 'mousedown', function(){
-        drawFreeHand();
-    });   
+    google.maps.event.addDomListener(map.getDiv(), 'mousedown', drawFreeHand);   
 }
 
 function endDraw(){

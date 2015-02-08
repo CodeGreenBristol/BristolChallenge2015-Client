@@ -62,7 +62,7 @@ function showEditButtons(){
     setTimeout(function(){
         $('#undo-button').css('transform', 'scale(0.01)').show().css('transform', 'scale(1)');
         $('#submit-button').css('transform', 'scale(0.01)').show().css('transform', 'scale(1)');
-    }, 100);
+    }, 150);
 }
     
 function hideEditButtons(){

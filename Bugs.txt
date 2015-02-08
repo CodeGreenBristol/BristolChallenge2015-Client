@@ -7,7 +7,6 @@ Bugs
 - Dynamic heatmap marker scaling
 - Auto-refresh of heatmap on new feature submit (maybe)
 
-- Higher precision whilst drawing
 - Undo button flies onto screen
 - Popup appearing on cancel
 
