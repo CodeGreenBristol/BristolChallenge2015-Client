@@ -120,6 +120,8 @@ function endDraw(){
         scrollwheel: true, 
         disableDoubleClickZoom: false
     });    
+    
+    google.maps.event.clearListeners(map.getDiv(), 'mousedown');
 }
 
 // draw type click handler
@@ -157,6 +159,7 @@ $('#cancel-button').click(function(){
     hideDrawMenu();
     hideDrawTypes();
     hidePopup();
+    hideUndoButton();
     
     $.each(polygonArray, function(key, val){
         val.shape.setMap(null);

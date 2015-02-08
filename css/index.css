@@ -83,11 +83,11 @@ body {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 320px;
+  width: 290px;
   height: 253px;
   border-radius: 10px;
   margin-top: -126px;
-  margin-left: -160px;
+  margin-left: -145px;
   background: #fff;
   display: none;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.17);
@@ -366,55 +366,6 @@ body {
 }
 /* RESPONSIVENESS FOR MOBILE */
 @media only screen and (min-width: 320px) and (max-width: 768px) {
-  /* SIDE MENU */
-  #side-menu {
-    position: absolute;
-    background-color: #fff;
-    height: 100%;
-    width: 260px;
-    left: -260px;
-    z-index: 200;
-    /*box-shadow: 0 0 60px 20px rgba(0,0,0,0.5);*/
-  
-  }
-  #side-menu #user-information {
-    margin: 18px;
-  }
-  #side-menu #user-information #profile-picture {
-    width: 71px;
-  }
-  #side-menu #user-information #user-data {
-    position: absolute;
-    width: 106px;
-    left: 100px;
-    top: 33px;
-    font-family: Open Sans;
-    color: #4d4c4c;
-  }
-  #side-menu #user-information #user-data #user-name {
-    font-weight: 500;
-    font-size: 18px;
-  }
-  #side-menu #user-information #user-data #user-email {
-    font-weight: 300;
-    font-size: 12px;
-    /*font-style: italic;*/
-  
-  }
-  #side-menu #menu-options {
-    width: 240px;
-    margin-left: 0px;
-    list-style-type: none;
-    padding: 0px;
-    margin-left: 20px;
-  }
-  #side-menu #qr-code {
-    position: absolute;
-    left: 50%;
-    margin-left: -62px;
-    bottom: 68px;
-    width: 125px;
-  }
   /* CONTROLS */
   #top-menu .circular-button {
     width: 50px;
@@ -427,9 +378,6 @@ body {
   #top-menu #default-menu #outer-menu-button,
   #top-menu #default-menu #draw-button {
     margin: 15px;
-  }
-  #top-menu #draw-menu {
-    display: none;
   }
   #top-menu #draw-menu #cancel-button,
   #top-menu #draw-menu #undo-button,
@@ -444,30 +392,37 @@ body {
   }
   #top-menu #draw-menu #area-left {
     height: 50px;
+    width: calc(100% - 160px);
+  }
+  #top-menu #draw-menu #area-left.area-small {
     width: calc(100% - 225px);
+  }
+  #top-menu #draw-menu #area-left #number-left {
+    margin-top: 2px;
+    font-size: 23px;
+  }
+  #top-menu #draw-menu #area-left #phrase-left {
+    font-size: 13px;
+  }
+  #top-menu #draw-menu #area-left #phrase-left span {
+    font-size: 10px;
   }
   /* DRAWING */
   #draw-types {
-    bottom: 0;
-    width: 100%;
-    display: none;
+    height: 80px;
   }
   #draw-types .ind-draw {
-    float: left;
-    width: 25%;
     height: 70px;
-    position: relative;
+    margin-top: 10px;
+    bottom: -80px;
   }
   #draw-types .ind-draw.draw-active {
     height: 80px;
-    margin-top: -10px;
+    margin-top: 0px;
   }
   #draw-types .ind-draw img {
     width: 32px;
-    position: absolute;
-    left: 50%;
     margin-left: -16px;
-    top: 50%;
     margin-top: -16px;
   }
 }
