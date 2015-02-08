@@ -134,8 +134,6 @@ body {
   width: 260px;
   left: -260px;
   z-index: 200;
-  /*box-shadow: 0 0 60px 20px rgba(0,0,0,0.5);*/
-
 }
 #side-menu #user-information {
   margin: 18px;
@@ -200,10 +198,10 @@ body {
 }
 #side-menu #menu-options li .toggle-container .toggle-background {
   height: 26px;
-  background-color: #26df35;
   border-radius: 13px;
-  z-index: 210;
+  z-index: 1;
   padding: 0 18px 0 18px;
+  transition: all .2s linear;
 }
 #side-menu #menu-options li .toggle-container .toggle-button {
   width: 26px;
@@ -211,9 +209,21 @@ body {
   background-color: #fff;
   border-radius: 13px;
   border: 1px solid #cac8c8;
-  z-index: 220;
+  z-index: 2;
   margin-top: -27px;
+  transition: all .2s linear;
+}
+#side-menu #menu-options li .toggle-container:not(.toggled) .toggle-background {
+  background-color: #fc4700;
+}
+#side-menu #menu-options li .toggle-container:not(.toggled) .toggle-button {
   margin-left: 0px;
+}
+#side-menu #menu-options li .toggle-container.toggled .toggle-background {
+  background-color: #26df35;
+}
+#side-menu #menu-options li .toggle-container.toggled .toggle-button {
+  margin-left: 18px;
 }
 #side-menu #qr-code {
   position: absolute;

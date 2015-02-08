@@ -112,21 +112,3 @@ $('#outer-menu-button').click(function() {
 $('#mask-layer').click(function() {
 	collapseMenu();
 });
-
-// toggle Community Map
-$('#toggle-map-container').click(function() {
-	toggleAnimate('#toggle-map-container');
-});
-
-function toggleAnimate(el){
-    if(!$(el).hasClass('toggled')) {
-		$(el + " .toggle-background").css({'background-color': '#fc4700'});
-		$(el + " .toggle-button").animate({'margin-left': '18px'}, 200);
-		$(el).addClass('toggled');
-	}
-	else {
-		$(el + " .toggle-background").css({'background-color': '#26df35'});
-		$(el + " .toggle-button").animate({'margin-left': '0px'}, 200);
-		$(el).removeClass('toggled');
-	}
-}

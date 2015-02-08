@@ -140,7 +140,6 @@ html, body {
 	width: 260px;
 	left: -260px;
 	z-index: 200;
-	/*box-shadow: 0 0 60px 20px rgba(0,0,0,0.5);*/
 	#user-information {
 		margin: 18px;
 		#profile-picture {
@@ -198,13 +197,13 @@ html, body {
 				height: 26px;
 				width: 46px;
                 margin-top: 0px;
-                margin-right:20px;
+                margin-right:20px;               
                 .toggle-background {
-                    height: 26px;
-					background-color: #26df35;
+                    height: 26px;					
 					border-radius: 13px;
-					z-index: 210;
+					z-index: 1;
 					padding: 0 18px 0 18px;
+                    transition:all .2s linear;
                 }
                 .toggle-button {
                     width: 26px;
@@ -212,9 +211,25 @@ html, body {
 					background-color: #fff;
 					border-radius: 13px;
 					border: 1px solid #cac8c8;
-					z-index: 220;
-					margin-top: -27px;
-					margin-left: 0px;
+					z-index: 2;
+					margin-top: -27px;		
+                    transition:all .2s linear;
+                }
+                &:not(.toggled){
+                    .toggle-background {
+                        background-color: #fc4700;
+                    }
+                    .toggle-button {
+                        margin-left: 0px;
+                    }
+                }
+                &.toggled {
+                    .toggle-background {
+                        background-color: #26df35;
+                    }
+                    .toggle-button {
+                        margin-left: 18px;
+                    }
                 }
             }
 		}

@@ -1,8 +1,6 @@
 Bugs
 ---------------
 
-- Popup appearing on cancel
-
 - Mockups of municipality area
 - Presentation slides
 - Presentation rehearsal
