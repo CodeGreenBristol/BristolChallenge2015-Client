@@ -1,13 +1,3 @@
-// hide login page
-$('#login-button').click(function() {
-	$('#email-field').fadeOut(200);
-	$('#password-field').fadeOut(200);
-	$('#login-button').fadeOut(200);
-	$('#loading-animation').fadeIn(200);
-	$('#login-container').delay(2000).animate({'margin-left': -$(window).width() + "px"}, 300);
-	//$('#login-container').fadeOut(300);
-});
-
 var map;
 var colours = ['#47d282', '#dd6ca2', '#f4d248'];
 var selectedColour = 0;
@@ -29,7 +19,18 @@ function initialize() {
     };
     
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-   
+	
+	google.maps.event.addListener(map, 'zoom_changed', function() {
+		var zoomLevel = map.getZoom() - 12;
+		zoomLevel = Math.max(zoomLevel, 1);
+		zoomLevel = Math.pow(zoomLevel, 2.5);
+		
+		console.log('zoom level = ', zoomLevel);
+		heatmap_trees.set('radius', zoomLevel);
+		heatmap_flowers.set('radius', zoomLevel);
+		heatmap_park.set('radius', zoomLevel);
+		
+	});
 }
 $('#number-left').text(formattedNumber(spaceLeft));
 
@@ -218,41 +219,6 @@ $('#undo-button').click(function(){
     }
 });
 
-
-// expand menu
-$('#outer-menu-button').click(function() {
-	if(!$('#menu-button-duplicate').is(':visible')) {
-		$('#draw-button').fadeOut(300);		
-		$('#menu-button').fadeOut(300);
-		$('#menu-button-duplicate').fadeIn(300);
-		$('#outer-menu-button').animate({'margin-left': '265px'});
-        $('#side-menu').animate({'left': '0px'});
-        $('#mask-layer').fadeIn(400);
-	}
-	else {
-		$('#draw-button').fadeIn(200);
-		$('#mask-layer').fadeOut(400);
-		$('#menu-button').fadeIn(300);
-		$('#menu-button-duplicate').fadeOut(300);
-		$('#outer-menu-button').animate({'margin-left': '15px'}, 400);
-		$('#side-menu').animate({'left': '-260px'}, {duration: 400});
-	}
-});
-
-// toggle Community Map
-$('#toggle-map-container').click(function() {
-	if(!$('#toggle-map-container').hasClass('toggled')) {
-		$('#toggle-map-button').css({'background-color': '#fc4700'});
-		$('#toggle-map-cursor').animate({'margin-left': '18px'}, 200);
-		$('#toggle-map-container').addClass('toggled');
-	}
-	else {
-		$('#toggle-map-button').css({'background-color': '#26df35'});
-		$('#toggle-map-cursor').animate({'margin-left': '0px'}, 200);
-		$('#toggle-map-container').removeClass('toggled');
-	}
-});
-
 var treePoints = [], flowerPoints = [], parkPoints = [];
 $.ajax({
   url: "http://178.62.54.23:3000/getdata",
@@ -299,9 +265,12 @@ function initializeHeatmap() {
   var pointArray2 = new google.maps.MVCArray(flowerPoints);
   var pointArray3 = new google.maps.MVCArray(parkPoints);
   var gradient_trees = [
-    'rgba(71, 210, 130, 0)',
-    'rgba(71, 210, 130, 1)',
-    'rgba(43, 139, 84, 1)'
+	'rgba(71, 210, 130, 0)',
+	'rgba(71, 210, 130, 0.1)',
+	'rgba(71, 210, 130, 0.2)',
+	'rgba(71, 210, 130, 0.3)',
+	'rgba(71, 210, 130, 0.6)',
+    'rgba(71, 210, 130, 1)'
   ];
   var gradient_flowers = [
     'rgba(0, 255, 0, 0)',
@@ -325,9 +294,9 @@ function initializeHeatmap() {
   heatmap_trees.set('gradient', heatmap_trees.get('gradient') ? null : gradient_trees);
   heatmap_flowers.set('gradient', heatmap_flowers.get('gradient') ? null : gradient_flowers);
   heatmap_park.set('gradient', heatmap_park.get('gradient') ? null : gradient_park);
-  heatmap_trees.set('radius', heatmap_trees.get('radius') ? null : 15);
-  heatmap_flowers.set('radius', heatmap_flowers.get('radius') ? null : 15);
-  heatmap_park.set('radius', heatmap_park.get('radius') ? null : 15);
+  heatmap_trees.set('radius', 15);
+  heatmap_flowers.set('radius', 15);
+  heatmap_park.set('radius', 15);
   heatmap_park.setMap(map);
   heatmap_trees.setMap(map);
   heatmap_flowers.setMap(map);
